@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Get Lost</title>
+    <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+    <!--<link rel="stylesheet" href="./bower_components/angular-material/angular-material.min.css">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.0-rc6/angular-material.min.css">
+
+    <style type="text/css">
+        /**
+         * Hide when Angular is not yet loaded and initialized
+         */
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+
+
+
+</head>
+<body ng-app="getLostApp" ng-cloak>
+<div ng-controller="AppCtrl" layout="column">
+
+    <script type="text/ng-template" id="partials/view1.html">  Tab #1 </script>
+    <script type="text/ng-template" id="partials/view2.html">  Tab #2 </script>
+    <script type="text/ng-template" id="partials/view3.html">  Tab #3 </script>
+
+<md-content>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" aria-label="Menu">
+                <!--<md-icon><i class="material-icons">menu</i></md-icon>-->
+                <md-icon md-svg-icon="img/icons/ic_menu_black_24px.svg"></md-icon>
+            </md-button>
+            <h2>Equated Monthly Installment - EMI</h2>
+            <!-- fill up the space between left and right area -->
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Share">
+                <!--<md-icon><i class="material-icons">share</i></md-icon>-->
+                <md-icon md-svg-icon="img/icons/ic_share_black_24px.svg"></md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="More Vertical">
+                <md-icon md-svg-icon="img/icons/ic_more_vert_black_24px.svg"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+</md-content>
+
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom class="md-primary" md-selected="selectedIndex">
+            <md-tab>
+                <md-tab-label>Loan Details</md-tab-label>
+            </md-tab>
+            <md-tab>
+                <md-tab-label>EMI Details</md-tab-label>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+
+    <div id="content" ui-view flex> </div>
+
+    <div layout="row">
+        <div flex>
+            <md-content layout-padding>
+                <form name="projectForm">
+
+                    <!--<md-radio-group ng-model="loan.loanType" layout="row" layout-align="center center" >
+                        <md-radio-button value="home">Home</md-radio-button>
+                        <md-radio-button value="car">Car</md-radio-button>
+                        <md-radio-button value="personal">Personal</md-radio-button>
+                    </md-radio-group>-->
+
+                    <md-input-container class="md-block">
+                        <label>Amount (Rs)</label>
+                        <input required type="number" step="any" name="amount" ng-model="loan.amount">
+
+
+                        <!--<div ng-messages="projectForm.rate.$error" multiple>
+                            <div ng-message="required">
+                                You've got to charge something! You can't just <b>give away</b> a Missile Defense
+                                System.
+                            </div>
+                            <div ng-message="min">
+                                You should charge at least $800 an hour. This job is a big deal... if you mess up,
+                                everyone dies!
+                            </div>
+                            <div ng-message="pattern">
+                                You should charge exactly $1,234.
+                            </div>
+                            <div ng-message="max">
+                                {{projectForm.rate.$viewValue | currency:"$":0}} an hour? That's a little ridiculous. I
+                                doubt event Bill Clinton could afford that.
+                            </div>
+                        </div>-->
+                    </md-input-container>
+
+                    <!--<md-slider flex min="0" max="{{loan.amount+1000}}" ng-model="loan.amount" aria-label="red" id="red-slider"
+                               class></md-slider>-->
+
+                    <md-input-container class="md-block">
+                        <label>Duration (Months)</label>
+                        <input required type="number" step="any" name="duration" ng-model="loan.duration">
+                        <!--<div ng-messages="projectForm.description.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+                        </div>-->
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Interest Rate (%)</label>
+                        <input required type="number" step="any" name="interestRate" ng-model="loan.interestRate">
+                        <!--<div ng-messages="projectForm.clientName.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>-->
+                    </md-input-container>
+
+                    <section layout="row" layout-sm="column" layout-align="left center" layout-wrap>
+                        <md-button class="md-raised md-primary" ng-click="add(loan)">Add</md-button>
+                    </section>
+
+                </form>
+
+
+
+            </md-content>
+
+        </div>
+        <div flex>
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">EMI Details</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <md-list>
+                        <md-list-item>
+                            <p>Loan EMI</p>{{ emi.payment }}
+                        </md-list-item>
+                        <md-divider></md-divider>
+                        <md-list-item>
+                            <p>Total Payment</p>{{ emi.total }}
+                        </md-list-item>
+                        <md-divider></md-divider>
+                        <md-list-item>
+                            <p>Total Interest Payable</p>{{ emi.totalinterest }}
+                        </md-list-item>
+                    </md-list>
+
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button>Details</md-button>
+                    <md-button>Copy</md-button>
+                </md-card-actions>
+            </md-card>
+            <md-card ng-repeat="emi in emis | orderObjectBy:id:true">
+                <!--<md-card-header>
+                    <md-card-header-text>
+                        <span class="md-title">#{{$index+1}}</span>
+                        &lt;!&ndash;<span class="md-subhead">Sub header</span>&ndash;&gt;
+                    </md-card-header-text>
+                </md-card-header>-->
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">#{{$index+1}}</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Loan Details</span>
+                            <!--<span class="md-subhead">Card subheader</span>-->
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-list>
+                        <md-list-item>
+                            <p>Amount (Rs)</p>{{ emi.loan.amount }}
+                        </md-list-item>
+                        <md-divider></md-divider>
+                        <md-list-item>
+                            <p>Duration (Months)</p>{{ emi.loan.duration }}
+                        </md-list-item>
+                        <md-divider></md-divider>
+                        <md-list-item>
+                            <p>Interest Rate (%)</p>{{ emi.loan.interestRate }}
+                        </md-list-item>
+                    </md-list>
+                    <md-divider></md-divider>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">EMI Details</span>
+                            <!--<span class="md-subhead">Card subheader</span>-->
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-list>
+                        <md-list-item>
+                            <p>Loan EMI</p>{{ emi.emi.payment }}
+                        </md-list-item>
+                        <md-divider></md-divider>
+                        <md-list-item>
+                            <p>Total Payment</p>{{ emi.emi.total }}
+                        </md-list-item>
+                        <md-divider></md-divider>
+                        <md-list-item>
+                            <p>Total Interest Payable</p>{{ emi.emi.totalinterest }}
+                        </md-list-item>
+                    </md-list>
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button>Details</md-button>
+                    <md-button>Copy</md-button>
+                </md-card-actions>
+            </md-card>
+
+
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<!--<script src="./bower_components/angular/angular.min.js"></script>
+<script src="./bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="./bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="./bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="./bower_components/angular-material/angular-material.min.js"></script>-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-aria.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-animate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.0-rc6/angular-material.min.js"></script>
+
+
+<script src="./app.js"></script>
+
+</body>
+</html>

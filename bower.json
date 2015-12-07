@@ -1,0 +1,20 @@
+{
+  "name": "EMI",
+  "version": "0.1.0",
+  "description": "EMI",
+  "authors": [
+    "Sajith M"
+  ],
+  "license": "MS",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "devDependencies": {},
+  "dependencies": {
+    "angular-material": "master",
+    "angular-ui-router": "~0.2.15"
+  }
+}
